@@ -30,12 +30,13 @@ class StripePayLaterButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget button() {
-      return TextButton(
-        onPressed: onTap ??
-            () {
-              context.read<StripePaymentBloc>().add(const PayLater());
-            },
+      return GestureDetector(
+        onTap: onTap ??
+            () => context
+                .read<StripePaymentBloc>() //
+                .add(const PayLater()),
         child: Container(
+          width: double.infinity,
           padding: const EdgeInsets.symmetric(
             horizontal: 22,
             vertical: 12,
@@ -45,13 +46,15 @@ class StripePayLaterButton extends StatelessWidget {
                 color: Colors.black,
                 borderRadius: BorderRadius.circular(2),
               ),
-          child: Text(
-            title,
-            style: titleStyle ??
-                const TextStyle(
-                  color: Colors.white,
-                  fontSize: 22,
-                ),
+          child: Center(
+            child: Text(
+              title,
+              style: titleStyle ??
+                  const TextStyle(
+                    color: Colors.white,
+                    fontSize: 22,
+                  ),
+            ),
           ),
         ),
       );

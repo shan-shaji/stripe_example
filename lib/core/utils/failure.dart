@@ -14,9 +14,3 @@ class ServerFailure extends Failure {
     String? message,
   }) : super(message ?? 'Something Went Wrong');
 }
-
-class StripeServerFailure extends Failure {
-  const StripeServerFailure({
-    String? message,
-  }) : super(message ?? 'Something Went Wrong');
-}

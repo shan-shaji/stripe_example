@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stripe_new/features/stripe_payment/stripe_payment.dart';
 
-class StripePaymentPageWrapper extends StatelessWidget {
-  const StripePaymentPageWrapper({
+class StripePaymentBlocProvider extends StatelessWidget {
+  const StripePaymentBlocProvider({
     super.key,
     required this.child,
   });

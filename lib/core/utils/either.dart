@@ -1,5 +1,3 @@
-// ignore_for_file: lines_longer_than_80_chars
-
 abstract class Either<L, R> {
   /// Represents a disjoint union of two types: [Left] or [Right].
   ///
