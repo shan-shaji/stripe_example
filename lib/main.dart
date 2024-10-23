@@ -23,27 +23,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final stripeClient = StripeClient(Dio());
-    final stripeRemoteDataSource = StripRemoteDataSourceImpl(
-      stripeClient: stripeClient,
-    );
-    final stripeRepository = StripeRepositoryImpl(
-      stripeRemoteDataSource: stripeRemoteDataSource,
-    );
     return MaterialApp(
       title: 'Stripe test',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: BlocProvider(
-        create: (_) => StripePaymentBloc(
-            createPaymentIntentUseCase:
-                CreatePaymentIntentUseCase(stripeRepository),
-            createSetupIntentUseCase:
-                CreateSetupIntentUseCase(stripeRepository)),
-        child: const PaymentPage(),
-      ),
+      home: const PaymentPage(),
     );
   }
 }
