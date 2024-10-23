@@ -1,10 +1,7 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:stripe_new/payment_page.dart';
-import 'package:stripe_new/features/stripe_payment/stripe_payment.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
