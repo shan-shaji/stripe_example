@@ -38,8 +38,10 @@ class MyApp extends StatelessWidget {
       ),
       home: BlocProvider(
         create: (_) => StripePaymentBloc(
-          createPaymentIntentUseCase: CreatePaymentIntentUseCase(stripeRepository),
-        ),
+            createPaymentIntentUseCase:
+                CreatePaymentIntentUseCase(stripeRepository),
+            createSetupIntentUseCase:
+                CreateSetupIntentUseCase(stripeRepository)),
         child: const PaymentPage(),
       ),
     );

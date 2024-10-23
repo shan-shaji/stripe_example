@@ -18,31 +18,26 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$StripePaymentEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(
-            double amount, String currency, PaymentType paymentType)
-        payNow,
-    required TResult Function(String clientSecret) handlePaymentSheet,
-    required TResult Function(
-            String clientSecret, String amount, String itemName)
-        payWithApplePay,
+    required TResult Function(double amount, String currency) payNow,
+    required TResult Function(String clientSecret, PaymentType paymentType)
+        handlePaymentSheet,
+    required TResult Function() payLater,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(double amount, String currency, PaymentType paymentType)?
-        payNow,
-    TResult? Function(String clientSecret)? handlePaymentSheet,
-    TResult? Function(String clientSecret, String amount, String itemName)?
-        payWithApplePay,
+    TResult? Function(double amount, String currency)? payNow,
+    TResult? Function(String clientSecret, PaymentType paymentType)?
+        handlePaymentSheet,
+    TResult? Function()? payLater,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(double amount, String currency, PaymentType paymentType)?
-        payNow,
-    TResult Function(String clientSecret)? handlePaymentSheet,
-    TResult Function(String clientSecret, String amount, String itemName)?
-        payWithApplePay,
+    TResult Function(double amount, String currency)? payNow,
+    TResult Function(String clientSecret, PaymentType paymentType)?
+        handlePaymentSheet,
+    TResult Function()? payLater,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -50,21 +45,21 @@ mixin _$StripePaymentEvent {
   TResult map<TResult extends Object?>({
     required TResult Function(PayNow value) payNow,
     required TResult Function(HandlePaymentSheet value) handlePaymentSheet,
-    required TResult Function(PayWithApplePay value) payWithApplePay,
+    required TResult Function(PayLater value) payLater,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(PayNow value)? payNow,
     TResult? Function(HandlePaymentSheet value)? handlePaymentSheet,
-    TResult? Function(PayWithApplePay value)? payWithApplePay,
+    TResult? Function(PayLater value)? payLater,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(PayNow value)? payNow,
     TResult Function(HandlePaymentSheet value)? handlePaymentSheet,
-    TResult Function(PayWithApplePay value)? payWithApplePay,
+    TResult Function(PayLater value)? payLater,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -97,7 +92,7 @@ abstract class _$$PayNowImplCopyWith<$Res> {
           _$PayNowImpl value, $Res Function(_$PayNowImpl) then) =
       __$$PayNowImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({double amount, String currency, PaymentType paymentType});
+  $Res call({double amount, String currency});
 }
 
 /// @nodoc
@@ -115,7 +110,6 @@ class __$$PayNowImplCopyWithImpl<$Res>
   $Res call({
     Object? amount = null,
     Object? currency = null,
-    Object? paymentType = null,
   }) {
     return _then(_$PayNowImpl(
       amount: null == amount
@@ -126,10 +120,6 @@ class __$$PayNowImplCopyWithImpl<$Res>
           ? _value.currency
           : currency // ignore: cast_nullable_to_non_nullable
               as String,
-      paymentType: null == paymentType
-          ? _value.paymentType
-          : paymentType // ignore: cast_nullable_to_non_nullable
-              as PaymentType,
     ));
   }
 }
@@ -137,21 +127,16 @@ class __$$PayNowImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$PayNowImpl implements PayNow {
-  const _$PayNowImpl(
-      {required this.amount,
-      required this.currency,
-      required this.paymentType});
+  const _$PayNowImpl({required this.amount, required this.currency});
 
   @override
   final double amount;
   @override
   final String currency;
-  @override
-  final PaymentType paymentType;
 
   @override
   String toString() {
-    return 'StripePaymentEvent.payNow(amount: $amount, currency: $currency, paymentType: $paymentType)';
+    return 'StripePaymentEvent.payNow(amount: $amount, currency: $currency)';
   }
 
   @override
@@ -161,13 +146,11 @@ class _$PayNowImpl implements PayNow {
             other is _$PayNowImpl &&
             (identical(other.amount, amount) || other.amount == amount) &&
             (identical(other.currency, currency) ||
-                other.currency == currency) &&
-            (identical(other.paymentType, paymentType) ||
-                other.paymentType == paymentType));
+                other.currency == currency));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, amount, currency, paymentType);
+  int get hashCode => Object.hash(runtimeType, amount, currency);
 
   /// Create a copy of StripePaymentEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -180,41 +163,36 @@ class _$PayNowImpl implements PayNow {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(
-            double amount, String currency, PaymentType paymentType)
-        payNow,
-    required TResult Function(String clientSecret) handlePaymentSheet,
-    required TResult Function(
-            String clientSecret, String amount, String itemName)
-        payWithApplePay,
+    required TResult Function(double amount, String currency) payNow,
+    required TResult Function(String clientSecret, PaymentType paymentType)
+        handlePaymentSheet,
+    required TResult Function() payLater,
   }) {
-    return payNow(amount, currency, paymentType);
+    return payNow(amount, currency);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(double amount, String currency, PaymentType paymentType)?
-        payNow,
-    TResult? Function(String clientSecret)? handlePaymentSheet,
-    TResult? Function(String clientSecret, String amount, String itemName)?
-        payWithApplePay,
+    TResult? Function(double amount, String currency)? payNow,
+    TResult? Function(String clientSecret, PaymentType paymentType)?
+        handlePaymentSheet,
+    TResult? Function()? payLater,
   }) {
-    return payNow?.call(amount, currency, paymentType);
+    return payNow?.call(amount, currency);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(double amount, String currency, PaymentType paymentType)?
-        payNow,
-    TResult Function(String clientSecret)? handlePaymentSheet,
-    TResult Function(String clientSecret, String amount, String itemName)?
-        payWithApplePay,
+    TResult Function(double amount, String currency)? payNow,
+    TResult Function(String clientSecret, PaymentType paymentType)?
+        handlePaymentSheet,
+    TResult Function()? payLater,
     required TResult orElse(),
   }) {
     if (payNow != null) {
-      return payNow(amount, currency, paymentType);
+      return payNow(amount, currency);
     }
     return orElse();
   }
@@ -224,7 +202,7 @@ class _$PayNowImpl implements PayNow {
   TResult map<TResult extends Object?>({
     required TResult Function(PayNow value) payNow,
     required TResult Function(HandlePaymentSheet value) handlePaymentSheet,
-    required TResult Function(PayWithApplePay value) payWithApplePay,
+    required TResult Function(PayLater value) payLater,
   }) {
     return payNow(this);
   }
@@ -234,7 +212,7 @@ class _$PayNowImpl implements PayNow {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(PayNow value)? payNow,
     TResult? Function(HandlePaymentSheet value)? handlePaymentSheet,
-    TResult? Function(PayWithApplePay value)? payWithApplePay,
+    TResult? Function(PayLater value)? payLater,
   }) {
     return payNow?.call(this);
   }
@@ -244,7 +222,7 @@ class _$PayNowImpl implements PayNow {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(PayNow value)? payNow,
     TResult Function(HandlePaymentSheet value)? handlePaymentSheet,
-    TResult Function(PayWithApplePay value)? payWithApplePay,
+    TResult Function(PayLater value)? payLater,
     required TResult orElse(),
   }) {
     if (payNow != null) {
@@ -257,12 +235,10 @@ class _$PayNowImpl implements PayNow {
 abstract class PayNow implements StripePaymentEvent {
   const factory PayNow(
       {required final double amount,
-      required final String currency,
-      required final PaymentType paymentType}) = _$PayNowImpl;
+      required final String currency}) = _$PayNowImpl;
 
   double get amount;
   String get currency;
-  PaymentType get paymentType;
 
   /// Create a copy of StripePaymentEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -277,7 +253,7 @@ abstract class _$$HandlePaymentSheetImplCopyWith<$Res> {
           $Res Function(_$HandlePaymentSheetImpl) then) =
       __$$HandlePaymentSheetImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({String clientSecret});
+  $Res call({String clientSecret, PaymentType paymentType});
 }
 
 /// @nodoc
@@ -294,12 +270,17 @@ class __$$HandlePaymentSheetImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? clientSecret = null,
+    Object? paymentType = null,
   }) {
     return _then(_$HandlePaymentSheetImpl(
       clientSecret: null == clientSecret
           ? _value.clientSecret
           : clientSecret // ignore: cast_nullable_to_non_nullable
               as String,
+      paymentType: null == paymentType
+          ? _value.paymentType
+          : paymentType // ignore: cast_nullable_to_non_nullable
+              as PaymentType,
     ));
   }
 }
@@ -307,14 +288,17 @@ class __$$HandlePaymentSheetImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$HandlePaymentSheetImpl implements HandlePaymentSheet {
-  const _$HandlePaymentSheetImpl({required this.clientSecret});
+  const _$HandlePaymentSheetImpl(
+      {required this.clientSecret, required this.paymentType});
 
   @override
   final String clientSecret;
+  @override
+  final PaymentType paymentType;
 
   @override
   String toString() {
-    return 'StripePaymentEvent.handlePaymentSheet(clientSecret: $clientSecret)';
+    return 'StripePaymentEvent.handlePaymentSheet(clientSecret: $clientSecret, paymentType: $paymentType)';
   }
 
   @override
@@ -323,11 +307,13 @@ class _$HandlePaymentSheetImpl implements HandlePaymentSheet {
         (other.runtimeType == runtimeType &&
             other is _$HandlePaymentSheetImpl &&
             (identical(other.clientSecret, clientSecret) ||
-                other.clientSecret == clientSecret));
+                other.clientSecret == clientSecret) &&
+            (identical(other.paymentType, paymentType) ||
+                other.paymentType == paymentType));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, clientSecret);
+  int get hashCode => Object.hash(runtimeType, clientSecret, paymentType);
 
   /// Create a copy of StripePaymentEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -341,41 +327,36 @@ class _$HandlePaymentSheetImpl implements HandlePaymentSheet {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(
-            double amount, String currency, PaymentType paymentType)
-        payNow,
-    required TResult Function(String clientSecret) handlePaymentSheet,
-    required TResult Function(
-            String clientSecret, String amount, String itemName)
-        payWithApplePay,
+    required TResult Function(double amount, String currency) payNow,
+    required TResult Function(String clientSecret, PaymentType paymentType)
+        handlePaymentSheet,
+    required TResult Function() payLater,
   }) {
-    return handlePaymentSheet(clientSecret);
+    return handlePaymentSheet(clientSecret, paymentType);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(double amount, String currency, PaymentType paymentType)?
-        payNow,
-    TResult? Function(String clientSecret)? handlePaymentSheet,
-    TResult? Function(String clientSecret, String amount, String itemName)?
-        payWithApplePay,
+    TResult? Function(double amount, String currency)? payNow,
+    TResult? Function(String clientSecret, PaymentType paymentType)?
+        handlePaymentSheet,
+    TResult? Function()? payLater,
   }) {
-    return handlePaymentSheet?.call(clientSecret);
+    return handlePaymentSheet?.call(clientSecret, paymentType);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(double amount, String currency, PaymentType paymentType)?
-        payNow,
-    TResult Function(String clientSecret)? handlePaymentSheet,
-    TResult Function(String clientSecret, String amount, String itemName)?
-        payWithApplePay,
+    TResult Function(double amount, String currency)? payNow,
+    TResult Function(String clientSecret, PaymentType paymentType)?
+        handlePaymentSheet,
+    TResult Function()? payLater,
     required TResult orElse(),
   }) {
     if (handlePaymentSheet != null) {
-      return handlePaymentSheet(clientSecret);
+      return handlePaymentSheet(clientSecret, paymentType);
     }
     return orElse();
   }
@@ -385,7 +366,7 @@ class _$HandlePaymentSheetImpl implements HandlePaymentSheet {
   TResult map<TResult extends Object?>({
     required TResult Function(PayNow value) payNow,
     required TResult Function(HandlePaymentSheet value) handlePaymentSheet,
-    required TResult Function(PayWithApplePay value) payWithApplePay,
+    required TResult Function(PayLater value) payLater,
   }) {
     return handlePaymentSheet(this);
   }
@@ -395,7 +376,7 @@ class _$HandlePaymentSheetImpl implements HandlePaymentSheet {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(PayNow value)? payNow,
     TResult? Function(HandlePaymentSheet value)? handlePaymentSheet,
-    TResult? Function(PayWithApplePay value)? payWithApplePay,
+    TResult? Function(PayLater value)? payLater,
   }) {
     return handlePaymentSheet?.call(this);
   }
@@ -405,7 +386,7 @@ class _$HandlePaymentSheetImpl implements HandlePaymentSheet {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(PayNow value)? payNow,
     TResult Function(HandlePaymentSheet value)? handlePaymentSheet,
-    TResult Function(PayWithApplePay value)? payWithApplePay,
+    TResult Function(PayLater value)? payLater,
     required TResult orElse(),
   }) {
     if (handlePaymentSheet != null) {
@@ -416,10 +397,12 @@ class _$HandlePaymentSheetImpl implements HandlePaymentSheet {
 }
 
 abstract class HandlePaymentSheet implements StripePaymentEvent {
-  const factory HandlePaymentSheet({required final String clientSecret}) =
-      _$HandlePaymentSheetImpl;
+  const factory HandlePaymentSheet(
+      {required final String clientSecret,
+      required final PaymentType paymentType}) = _$HandlePaymentSheetImpl;
 
   String get clientSecret;
+  PaymentType get paymentType;
 
   /// Create a copy of StripePaymentEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -429,130 +412,76 @@ abstract class HandlePaymentSheet implements StripePaymentEvent {
 }
 
 /// @nodoc
-abstract class _$$PayWithApplePayImplCopyWith<$Res> {
-  factory _$$PayWithApplePayImplCopyWith(_$PayWithApplePayImpl value,
-          $Res Function(_$PayWithApplePayImpl) then) =
-      __$$PayWithApplePayImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({String clientSecret, String amount, String itemName});
+abstract class _$$PayLaterImplCopyWith<$Res> {
+  factory _$$PayLaterImplCopyWith(
+          _$PayLaterImpl value, $Res Function(_$PayLaterImpl) then) =
+      __$$PayLaterImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$PayWithApplePayImplCopyWithImpl<$Res>
-    extends _$StripePaymentEventCopyWithImpl<$Res, _$PayWithApplePayImpl>
-    implements _$$PayWithApplePayImplCopyWith<$Res> {
-  __$$PayWithApplePayImplCopyWithImpl(
-      _$PayWithApplePayImpl _value, $Res Function(_$PayWithApplePayImpl) _then)
+class __$$PayLaterImplCopyWithImpl<$Res>
+    extends _$StripePaymentEventCopyWithImpl<$Res, _$PayLaterImpl>
+    implements _$$PayLaterImplCopyWith<$Res> {
+  __$$PayLaterImplCopyWithImpl(
+      _$PayLaterImpl _value, $Res Function(_$PayLaterImpl) _then)
       : super(_value, _then);
 
   /// Create a copy of StripePaymentEvent
   /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? clientSecret = null,
-    Object? amount = null,
-    Object? itemName = null,
-  }) {
-    return _then(_$PayWithApplePayImpl(
-      clientSecret: null == clientSecret
-          ? _value.clientSecret
-          : clientSecret // ignore: cast_nullable_to_non_nullable
-              as String,
-      amount: null == amount
-          ? _value.amount
-          : amount // ignore: cast_nullable_to_non_nullable
-              as String,
-      itemName: null == itemName
-          ? _value.itemName
-          : itemName // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
 }
 
 /// @nodoc
 
-class _$PayWithApplePayImpl implements PayWithApplePay {
-  const _$PayWithApplePayImpl(
-      {required this.clientSecret,
-      required this.amount,
-      required this.itemName});
-
-  @override
-  final String clientSecret;
-  @override
-  final String amount;
-  @override
-  final String itemName;
+class _$PayLaterImpl implements PayLater {
+  const _$PayLaterImpl();
 
   @override
   String toString() {
-    return 'StripePaymentEvent.payWithApplePay(clientSecret: $clientSecret, amount: $amount, itemName: $itemName)';
+    return 'StripePaymentEvent.payLater()';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$PayWithApplePayImpl &&
-            (identical(other.clientSecret, clientSecret) ||
-                other.clientSecret == clientSecret) &&
-            (identical(other.amount, amount) || other.amount == amount) &&
-            (identical(other.itemName, itemName) ||
-                other.itemName == itemName));
+        (other.runtimeType == runtimeType && other is _$PayLaterImpl);
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, clientSecret, amount, itemName);
-
-  /// Create a copy of StripePaymentEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$PayWithApplePayImplCopyWith<_$PayWithApplePayImpl> get copyWith =>
-      __$$PayWithApplePayImplCopyWithImpl<_$PayWithApplePayImpl>(
-          this, _$identity);
+  int get hashCode => runtimeType.hashCode;
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(
-            double amount, String currency, PaymentType paymentType)
-        payNow,
-    required TResult Function(String clientSecret) handlePaymentSheet,
-    required TResult Function(
-            String clientSecret, String amount, String itemName)
-        payWithApplePay,
+    required TResult Function(double amount, String currency) payNow,
+    required TResult Function(String clientSecret, PaymentType paymentType)
+        handlePaymentSheet,
+    required TResult Function() payLater,
   }) {
-    return payWithApplePay(clientSecret, amount, itemName);
+    return payLater();
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(double amount, String currency, PaymentType paymentType)?
-        payNow,
-    TResult? Function(String clientSecret)? handlePaymentSheet,
-    TResult? Function(String clientSecret, String amount, String itemName)?
-        payWithApplePay,
+    TResult? Function(double amount, String currency)? payNow,
+    TResult? Function(String clientSecret, PaymentType paymentType)?
+        handlePaymentSheet,
+    TResult? Function()? payLater,
   }) {
-    return payWithApplePay?.call(clientSecret, amount, itemName);
+    return payLater?.call();
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(double amount, String currency, PaymentType paymentType)?
-        payNow,
-    TResult Function(String clientSecret)? handlePaymentSheet,
-    TResult Function(String clientSecret, String amount, String itemName)?
-        payWithApplePay,
+    TResult Function(double amount, String currency)? payNow,
+    TResult Function(String clientSecret, PaymentType paymentType)?
+        handlePaymentSheet,
+    TResult Function()? payLater,
     required TResult orElse(),
   }) {
-    if (payWithApplePay != null) {
-      return payWithApplePay(clientSecret, amount, itemName);
+    if (payLater != null) {
+      return payLater();
     }
     return orElse();
   }
@@ -562,9 +491,9 @@ class _$PayWithApplePayImpl implements PayWithApplePay {
   TResult map<TResult extends Object?>({
     required TResult Function(PayNow value) payNow,
     required TResult Function(HandlePaymentSheet value) handlePaymentSheet,
-    required TResult Function(PayWithApplePay value) payWithApplePay,
+    required TResult Function(PayLater value) payLater,
   }) {
-    return payWithApplePay(this);
+    return payLater(this);
   }
 
   @override
@@ -572,9 +501,9 @@ class _$PayWithApplePayImpl implements PayWithApplePay {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(PayNow value)? payNow,
     TResult? Function(HandlePaymentSheet value)? handlePaymentSheet,
-    TResult? Function(PayWithApplePay value)? payWithApplePay,
+    TResult? Function(PayLater value)? payLater,
   }) {
-    return payWithApplePay?.call(this);
+    return payLater?.call(this);
   }
 
   @override
@@ -582,31 +511,18 @@ class _$PayWithApplePayImpl implements PayWithApplePay {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(PayNow value)? payNow,
     TResult Function(HandlePaymentSheet value)? handlePaymentSheet,
-    TResult Function(PayWithApplePay value)? payWithApplePay,
+    TResult Function(PayLater value)? payLater,
     required TResult orElse(),
   }) {
-    if (payWithApplePay != null) {
-      return payWithApplePay(this);
+    if (payLater != null) {
+      return payLater(this);
     }
     return orElse();
   }
 }
 
-abstract class PayWithApplePay implements StripePaymentEvent {
-  const factory PayWithApplePay(
-      {required final String clientSecret,
-      required final String amount,
-      required final String itemName}) = _$PayWithApplePayImpl;
-
-  String get clientSecret;
-  String get amount;
-  String get itemName;
-
-  /// Create a copy of StripePaymentEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$PayWithApplePayImplCopyWith<_$PayWithApplePayImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+abstract class PayLater implements StripePaymentEvent {
+  const factory PayLater() = _$PayLaterImpl;
 }
 
 /// @nodoc

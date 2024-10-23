@@ -12,45 +12,36 @@ part 'stripe_payment_state.dart';
 
 class StripePaymentBloc extends Bloc<StripePaymentEvent, StripePaymentState> {
   final CreatePaymentIntentUseCase _createPaymentIntentUseCase;
+  final CreateSetupIntentUseCase _createSetupIntentUseCase;
   final _errorMessage = 'We\'re having trouble processing your payment.';
 
   StripePaymentBloc({
     required CreatePaymentIntentUseCase createPaymentIntentUseCase,
+    required CreateSetupIntentUseCase createSetupIntentUseCase,
   })  : _createPaymentIntentUseCase = createPaymentIntentUseCase,
+        _createSetupIntentUseCase = createSetupIntentUseCase,
         super(const StripePaymentState.initial()) {
     on<PayNow>(_onStripePayNow);
     on<HandlePaymentSheet>(_onHandlePaymentSheet);
-    on<PayWithApplePay>(_onPayWithAppPay);
+    on<PayLater>(_onPayLater);
   }
 
-  Future<void> _onPayWithAppPay(
-    PayWithApplePay event,
+  Future<void> _onPayLater(
+    PayLater event,
     Emitter<StripePaymentState> emit,
   ) async {
-    try {
-      await Stripe.instance.confirmPlatformPayPaymentIntent(
-        clientSecret: event.clientSecret,
-        confirmParams: PlatformPayConfirmParams.applePay(
-          applePay: ApplePayParams(
-            merchantCountryCode: 'DE',
-            currencyCode: 'EUR',
-            cartItems: [
-              ApplePayCartSummaryItem.immediate(
-                label: event.itemName,
-                amount: event.amount,
-              )
-            ],
-          ),
+    emit(const StripePaymentState.loading());
+    final response = await _createSetupIntentUseCase();
+    response.fold((error) {
+      emit(StripePaymentState.paymentFailed(error: error.message));
+    }, (secret) {
+      add(
+        HandlePaymentSheet(
+          clientSecret: secret,
+          paymentType: PaymentType.payLater,
         ),
       );
-      emit(const StripePaymentState.paymentSuccess());
-    } on StripeConfigException catch (_) {
-      emit(StripePaymentState.paymentFailed(error: _errorMessage));
-    } on StripeException catch (e) {
-      emit(StripePaymentState.paymentFailed(error: _mapFailureCodeToMessage(e.error.code)));
-    } catch (_) {
-      emit(StripePaymentState.paymentFailed(error: _errorMessage));
-    }
+    });
   }
 
   Future<void> _onStripePayNow(
@@ -64,18 +55,13 @@ class StripePaymentBloc extends Bloc<StripePaymentEvent, StripePaymentState> {
     );
     response.fold((error) {
       emit(StripePaymentState.paymentFailed(error: error.message));
-    }, (data) {
-      if (event.paymentType == PaymentType.stripeSheet) {
-        add(HandlePaymentSheet(clientSecret: data));
-      } else {
-        add(
-          PayWithApplePay(
-            clientSecret: data,
-            amount: '${event.amount}',
-            itemName: 'TEST',
-          ),
-        );
-      }
+    }, (secret) {
+      add(
+        HandlePaymentSheet(
+          clientSecret: secret,
+          paymentType: PaymentType.payNow,
+        ),
+      );
     });
   }
 
@@ -93,27 +79,36 @@ class StripePaymentBloc extends Bloc<StripePaymentEvent, StripePaymentState> {
     Emitter<StripePaymentState> emit,
   ) async {
     try {
-      await Stripe.instance.initPaymentSheet(
-        paymentSheetParameters: SetupPaymentSheetParameters(
-          paymentIntentClientSecret: event.clientSecret,
-          applePay: const PaymentSheetApplePay(
-            merchantCountryCode: 'DE',
-          ),
-          googlePay: const PaymentSheetGooglePay(
-            merchantCountryCode: 'DE',
-            currencyCode: 'EUR',
-            testEnv: true,
-          ),
-          style: ThemeMode.light,
-          merchantDisplayName: 'Beunro',
-        ),
+      const applePayConfig = PaymentSheetApplePay(merchantCountryCode: 'DE');
+      const googlePayConfig = PaymentSheetGooglePay(
+        merchantCountryCode: 'DE',
+        currencyCode: 'EUR',
+        testEnv: true,
       );
+
+      SetupPaymentSheetParameters setupIntentSheetParameters =
+          const SetupPaymentSheetParameters(
+        applePay: applePayConfig,
+        googlePay: googlePayConfig,
+        style: ThemeMode.light,
+        merchantDisplayName: 'Beunro',
+      );
+
+      setupIntentSheetParameters = event.paymentType == PaymentType.payLater
+          ? setupIntentSheetParameters.copyWith(
+              setupIntentClientSecret: event.clientSecret)
+          : setupIntentSheetParameters.copyWith(
+              paymentIntentClientSecret: event.clientSecret);
+
+      await Stripe.instance
+          .initPaymentSheet(paymentSheetParameters: setupIntentSheetParameters);
       await Stripe.instance.presentPaymentSheet();
       emit(const StripePaymentState.paymentSuccess());
     } on StripeConfigException catch (_) {
       emit(StripePaymentState.paymentFailed(error: _errorMessage));
     } on StripeException catch (e) {
-      emit(StripePaymentState.paymentFailed(error: _mapFailureCodeToMessage(e.error.code)));
+      emit(StripePaymentState.paymentFailed(
+          error: _mapFailureCodeToMessage(e.error.code)));
     } catch (_) {
       emit(StripePaymentState.paymentFailed(error: _errorMessage));
     }

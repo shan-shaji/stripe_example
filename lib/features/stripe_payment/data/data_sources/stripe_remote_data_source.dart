@@ -7,4 +7,11 @@ abstract class StripeRemoteDataSource {
     bool isEnableAutomaticPaymentMethods = false,
     List<String> paymentMethodTypes = const [],
   });
+
+  /// Creates a PaymentIntent for future payment
+  Future<String> createSetupIntent({
+    String? customerId,
+    bool isEnableAutomaticPaymentMethods = false,
+    List<String> paymentMethodTypes = const [],
+  });
 }

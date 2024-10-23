@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_stripe/flutter_stripe.dart';
-import 'package:stripe_new/embedded_page.dart';
 import 'package:stripe_new/features/stripe_payment/presentation/presentation.dart';
+import 'package:stripe_new/features/stripe_payment/presentation/widgets/stripe_pay_later_button.dart';
 
 class PaymentPage extends StatelessWidget {
   const PaymentPage({super.key});
@@ -28,8 +27,33 @@ class PaymentPage extends StatelessWidget {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
+                          StripePayLaterButton(
+                            title: 'Pay Later',
+                            onLoading: () {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text('Loading'),
+                                ),
+                              );
+                            },
+                            onSuccess: () {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text('Success'),
+                                ),
+                              );
+                            },
+                            onFailure: (error) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(error),
+                                ),
+                              );
+                            },
+                          ),
+                          const SizedBox(height: 10),
                           StripePaymentButton(
-                            title: 'Pay Now with sheet 300',
+                            title: 'Pay Now 300',
                             onLoading: () {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
@@ -54,22 +78,6 @@ class PaymentPage extends StatelessWidget {
                             amount: 300,
                             currency: 'eur',
                           ),
-                          TextButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (BuildContext _) {
-                                    return BlocProvider<StripePaymentBloc>.value(
-                                      value: context.read<StripePaymentBloc>(),
-                                      child: const EmbeddedPage(),
-                                    );
-                                  },
-                                ),
-                              );
-                            },
-                            child: const Text('Embedded View'),
-                          )
                         ],
                       ),
                     ),

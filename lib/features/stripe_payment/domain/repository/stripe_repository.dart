@@ -7,4 +7,8 @@ abstract class StripeRepository {
     required double amount,
     required String currency,
   });
+
+  Future<Either<Failure, String>> createSetupIntent({
+    List<String> paymentMethodTypes = const [],
+  });
 }

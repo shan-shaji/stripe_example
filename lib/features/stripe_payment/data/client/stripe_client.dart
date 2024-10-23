@@ -16,4 +16,13 @@ abstract class StripeClient {
     @Body() Map<String, dynamic> request,
     @Header('Authorization') String authorization,
   );
+
+  @POST('/v1/setup_intents')
+  @Headers({
+    'Content-Type': 'application/x-www-form-urlencoded',
+  })
+  Future<String> createSetupIntent(
+    @Body() Map<String, dynamic> request,
+    @Header('Authorization') String authorization,
+  );
 }

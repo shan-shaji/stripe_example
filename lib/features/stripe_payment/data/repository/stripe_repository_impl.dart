@@ -23,4 +23,14 @@ class StripeRepositoryImpl implements StripeRepository {
         .makeRequest();
     return response;
   }
+
+  @override
+  Future<Either<Failure, String>> createSetupIntent({
+    List<String> paymentMethodTypes = const [],
+  }) async {
+    final response = await _stripeRemoteDataSource
+        .createSetupIntent(paymentMethodTypes: paymentMethodTypes)
+        .makeRequest();
+    return response;
+  }
 }

@@ -47,4 +47,34 @@ class StripRemoteDataSourceImpl implements StripeRemoteDataSource {
 
     return clientSecret;
   }
+
+  @override
+  Future<String> createSetupIntent({
+    String? customerId,
+    bool isEnableAutomaticPaymentMethods = true,
+    List<String> paymentMethodTypes = const [],
+  }) async {
+    final Map<String, dynamic> request = {};
+    if (isEnableAutomaticPaymentMethods) {
+      request.addAll({
+        'automatic_payment_methods[enabled]': true,
+      });
+    }
+
+    if (paymentMethodTypes.isNotEmpty && !isEnableAutomaticPaymentMethods) {
+      request.addAll({
+        'payment_method_types[]': paymentMethodTypes,
+      });
+    }
+
+    final stripeSecret = dotenv.env['STRIPE_SECRET'];
+    final response = await stripeClient.createSetupIntent(
+      request,
+      'Bearer $stripeSecret',
+    );
+    final data = jsonDecode(response);
+    final clientSecret = data['client_secret'];
+
+    return clientSecret;
+  }
 }

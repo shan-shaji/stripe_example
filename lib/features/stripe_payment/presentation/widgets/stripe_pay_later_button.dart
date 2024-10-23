@@ -2,15 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stripe_new/features/stripe_payment/stripe_payment.dart';
 
-class StripePaymentButton extends StatelessWidget {
-  const StripePaymentButton({
+class StripePayLaterButton extends StatelessWidget {
+  const StripePayLaterButton({
     super.key,
     required this.title,
     required this.onLoading,
     required this.onSuccess,
     required this.onFailure,
-    required this.amount,
-    required this.currency,
     this.decoration,
     this.onTap,
     this.isEnableListener = true,
@@ -23,8 +21,6 @@ class StripePaymentButton extends StatelessWidget {
   final BoxDecoration? decoration;
   final VoidCallback onSuccess;
   final VoidCallback onLoading;
-  final double amount;
-  final String currency;
   final Function(String error) onFailure;
 
   /// Turn the listener off if you want to manually listen to [StripePaymentBloc].
@@ -37,12 +33,7 @@ class StripePaymentButton extends StatelessWidget {
       return TextButton(
         onPressed: onTap ??
             () {
-              context.read<StripePaymentBloc>().add(
-                    PayNow(
-                      amount: amount,
-                      currency: currency,
-                    ),
-                  );
+              context.read<StripePaymentBloc>().add(const PayLater());
             },
         child: Container(
           padding: const EdgeInsets.symmetric(
