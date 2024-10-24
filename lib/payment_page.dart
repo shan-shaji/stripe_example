@@ -16,7 +16,7 @@ class PaymentPage extends StatelessWidget {
             children: [
               Expanded(
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Container(
                       decoration: BoxDecoration(
