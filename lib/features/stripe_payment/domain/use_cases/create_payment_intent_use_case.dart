@@ -7,13 +7,9 @@ class CreatePaymentIntentUseCase {
 
   CreatePaymentIntentUseCase(this._stripeRepository);
 
-  Future<Either<Failure, String>> call({
+  Future<Either<Failure, StripePaymentIntent>> call({
     required double amount,
-    required String currency,
   }) async {
-    return _stripeRepository.createPaymentIntent(
-      amount: amount,
-      currency: currency,
-    );
+    return _stripeRepository.createPaymentIntent(amount: amount);
   }
 }

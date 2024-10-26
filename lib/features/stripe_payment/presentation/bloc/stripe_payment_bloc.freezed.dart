@@ -19,7 +19,8 @@ mixin _$StripePaymentEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(double amount, String currency) payNow,
-    required TResult Function(String clientSecret, PaymentType paymentType)
+    required TResult Function(String clientSecret, PaymentType paymentType,
+            String currency, String stripeIntentId)
         handlePaymentSheet,
     required TResult Function() payLater,
   }) =>
@@ -27,7 +28,8 @@ mixin _$StripePaymentEvent {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(double amount, String currency)? payNow,
-    TResult? Function(String clientSecret, PaymentType paymentType)?
+    TResult? Function(String clientSecret, PaymentType paymentType,
+            String currency, String stripeIntentId)?
         handlePaymentSheet,
     TResult? Function()? payLater,
   }) =>
@@ -35,7 +37,8 @@ mixin _$StripePaymentEvent {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(double amount, String currency)? payNow,
-    TResult Function(String clientSecret, PaymentType paymentType)?
+    TResult Function(String clientSecret, PaymentType paymentType,
+            String currency, String stripeIntentId)?
         handlePaymentSheet,
     TResult Function()? payLater,
     required TResult orElse(),
@@ -164,7 +167,8 @@ class _$PayNowImpl implements PayNow {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(double amount, String currency) payNow,
-    required TResult Function(String clientSecret, PaymentType paymentType)
+    required TResult Function(String clientSecret, PaymentType paymentType,
+            String currency, String stripeIntentId)
         handlePaymentSheet,
     required TResult Function() payLater,
   }) {
@@ -175,7 +179,8 @@ class _$PayNowImpl implements PayNow {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(double amount, String currency)? payNow,
-    TResult? Function(String clientSecret, PaymentType paymentType)?
+    TResult? Function(String clientSecret, PaymentType paymentType,
+            String currency, String stripeIntentId)?
         handlePaymentSheet,
     TResult? Function()? payLater,
   }) {
@@ -186,7 +191,8 @@ class _$PayNowImpl implements PayNow {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(double amount, String currency)? payNow,
-    TResult Function(String clientSecret, PaymentType paymentType)?
+    TResult Function(String clientSecret, PaymentType paymentType,
+            String currency, String stripeIntentId)?
         handlePaymentSheet,
     TResult Function()? payLater,
     required TResult orElse(),
@@ -253,7 +259,11 @@ abstract class _$$HandlePaymentSheetImplCopyWith<$Res> {
           $Res Function(_$HandlePaymentSheetImpl) then) =
       __$$HandlePaymentSheetImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({String clientSecret, PaymentType paymentType});
+  $Res call(
+      {String clientSecret,
+      PaymentType paymentType,
+      String currency,
+      String stripeIntentId});
 }
 
 /// @nodoc
@@ -271,6 +281,8 @@ class __$$HandlePaymentSheetImplCopyWithImpl<$Res>
   $Res call({
     Object? clientSecret = null,
     Object? paymentType = null,
+    Object? currency = null,
+    Object? stripeIntentId = null,
   }) {
     return _then(_$HandlePaymentSheetImpl(
       clientSecret: null == clientSecret
@@ -281,6 +293,14 @@ class __$$HandlePaymentSheetImplCopyWithImpl<$Res>
           ? _value.paymentType
           : paymentType // ignore: cast_nullable_to_non_nullable
               as PaymentType,
+      currency: null == currency
+          ? _value.currency
+          : currency // ignore: cast_nullable_to_non_nullable
+              as String,
+      stripeIntentId: null == stripeIntentId
+          ? _value.stripeIntentId
+          : stripeIntentId // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -289,16 +309,23 @@ class __$$HandlePaymentSheetImplCopyWithImpl<$Res>
 
 class _$HandlePaymentSheetImpl implements HandlePaymentSheet {
   const _$HandlePaymentSheetImpl(
-      {required this.clientSecret, required this.paymentType});
+      {required this.clientSecret,
+      required this.paymentType,
+      required this.currency,
+      required this.stripeIntentId});
 
   @override
   final String clientSecret;
   @override
   final PaymentType paymentType;
+  @override
+  final String currency;
+  @override
+  final String stripeIntentId;
 
   @override
   String toString() {
-    return 'StripePaymentEvent.handlePaymentSheet(clientSecret: $clientSecret, paymentType: $paymentType)';
+    return 'StripePaymentEvent.handlePaymentSheet(clientSecret: $clientSecret, paymentType: $paymentType, currency: $currency, stripeIntentId: $stripeIntentId)';
   }
 
   @override
@@ -309,11 +336,16 @@ class _$HandlePaymentSheetImpl implements HandlePaymentSheet {
             (identical(other.clientSecret, clientSecret) ||
                 other.clientSecret == clientSecret) &&
             (identical(other.paymentType, paymentType) ||
-                other.paymentType == paymentType));
+                other.paymentType == paymentType) &&
+            (identical(other.currency, currency) ||
+                other.currency == currency) &&
+            (identical(other.stripeIntentId, stripeIntentId) ||
+                other.stripeIntentId == stripeIntentId));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, clientSecret, paymentType);
+  int get hashCode => Object.hash(
+      runtimeType, clientSecret, paymentType, currency, stripeIntentId);
 
   /// Create a copy of StripePaymentEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -328,35 +360,41 @@ class _$HandlePaymentSheetImpl implements HandlePaymentSheet {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(double amount, String currency) payNow,
-    required TResult Function(String clientSecret, PaymentType paymentType)
+    required TResult Function(String clientSecret, PaymentType paymentType,
+            String currency, String stripeIntentId)
         handlePaymentSheet,
     required TResult Function() payLater,
   }) {
-    return handlePaymentSheet(clientSecret, paymentType);
+    return handlePaymentSheet(
+        clientSecret, paymentType, currency, stripeIntentId);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(double amount, String currency)? payNow,
-    TResult? Function(String clientSecret, PaymentType paymentType)?
+    TResult? Function(String clientSecret, PaymentType paymentType,
+            String currency, String stripeIntentId)?
         handlePaymentSheet,
     TResult? Function()? payLater,
   }) {
-    return handlePaymentSheet?.call(clientSecret, paymentType);
+    return handlePaymentSheet?.call(
+        clientSecret, paymentType, currency, stripeIntentId);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(double amount, String currency)? payNow,
-    TResult Function(String clientSecret, PaymentType paymentType)?
+    TResult Function(String clientSecret, PaymentType paymentType,
+            String currency, String stripeIntentId)?
         handlePaymentSheet,
     TResult Function()? payLater,
     required TResult orElse(),
   }) {
     if (handlePaymentSheet != null) {
-      return handlePaymentSheet(clientSecret, paymentType);
+      return handlePaymentSheet(
+          clientSecret, paymentType, currency, stripeIntentId);
     }
     return orElse();
   }
@@ -399,10 +437,14 @@ class _$HandlePaymentSheetImpl implements HandlePaymentSheet {
 abstract class HandlePaymentSheet implements StripePaymentEvent {
   const factory HandlePaymentSheet(
       {required final String clientSecret,
-      required final PaymentType paymentType}) = _$HandlePaymentSheetImpl;
+      required final PaymentType paymentType,
+      required final String currency,
+      required final String stripeIntentId}) = _$HandlePaymentSheetImpl;
 
   String get clientSecret;
   PaymentType get paymentType;
+  String get currency;
+  String get stripeIntentId;
 
   /// Create a copy of StripePaymentEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -453,7 +495,8 @@ class _$PayLaterImpl implements PayLater {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(double amount, String currency) payNow,
-    required TResult Function(String clientSecret, PaymentType paymentType)
+    required TResult Function(String clientSecret, PaymentType paymentType,
+            String currency, String stripeIntentId)
         handlePaymentSheet,
     required TResult Function() payLater,
   }) {
@@ -464,7 +507,8 @@ class _$PayLaterImpl implements PayLater {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(double amount, String currency)? payNow,
-    TResult? Function(String clientSecret, PaymentType paymentType)?
+    TResult? Function(String clientSecret, PaymentType paymentType,
+            String currency, String stripeIntentId)?
         handlePaymentSheet,
     TResult? Function()? payLater,
   }) {
@@ -475,7 +519,8 @@ class _$PayLaterImpl implements PayLater {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(double amount, String currency)? payNow,
-    TResult Function(String clientSecret, PaymentType paymentType)?
+    TResult Function(String clientSecret, PaymentType paymentType,
+            String currency, String stripeIntentId)?
         handlePaymentSheet,
     TResult Function()? payLater,
     required TResult orElse(),

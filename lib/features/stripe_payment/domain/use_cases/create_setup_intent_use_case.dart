@@ -7,7 +7,7 @@ class CreateSetupIntentUseCase {
 
   CreateSetupIntentUseCase(this._stripeRepository);
 
-  Future<Either<Failure, String>> call({
+  Future<Either<Failure, StripeSetupIntent>> call({
     List<String> paymentMethodTypes = const [],
   }) async {
     return _stripeRepository.createSetupIntent(

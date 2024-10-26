@@ -34,11 +34,13 @@ class StripePaymentBloc extends Bloc<StripePaymentEvent, StripePaymentState> {
     final response = await _createSetupIntentUseCase();
     response.fold((error) {
       emit(StripePaymentState.paymentFailed(error: error.message));
-    }, (secret) {
+    }, (stripeSetupIntent) {
       add(
         HandlePaymentSheet(
-          clientSecret: secret,
+          clientSecret: stripeSetupIntent.clientSecret,
+          stripeIntentId: stripeSetupIntent.id,
           paymentType: PaymentType.payLater,
+          currency: 'eur',
         ),
       );
     });
@@ -51,14 +53,15 @@ class StripePaymentBloc extends Bloc<StripePaymentEvent, StripePaymentState> {
     emit(const StripePaymentState.loading());
     final response = await _createPaymentIntentUseCase(
       amount: event.amount,
-      currency: event.currency,
     );
     response.fold((error) {
       emit(StripePaymentState.paymentFailed(error: error.message));
-    }, (secret) {
+    }, (stripePaymentIntent) {
       add(
         HandlePaymentSheet(
-          clientSecret: secret,
+          clientSecret: stripePaymentIntent.clientSecret,
+          currency: stripePaymentIntent.currency,
+          stripeIntentId: stripePaymentIntent.id,
           paymentType: PaymentType.payNow,
         ),
       );
@@ -79,15 +82,17 @@ class StripePaymentBloc extends Bloc<StripePaymentEvent, StripePaymentState> {
     Emitter<StripePaymentState> emit,
   ) async {
     try {
-      const applePayConfig = PaymentSheetApplePay(merchantCountryCode: 'DE');
-      const googlePayConfig = PaymentSheetGooglePay(
-        merchantCountryCode: 'DE',
-        currencyCode: 'EUR',
+      const merchantCountryCode = 'DE';
+      const applePayConfig =
+          PaymentSheetApplePay(merchantCountryCode: merchantCountryCode);
+      final googlePayConfig = PaymentSheetGooglePay(
+        merchantCountryCode: merchantCountryCode,
+        currencyCode: event.currency,
         testEnv: true,
       );
 
       SetupPaymentSheetParameters setupIntentSheetParameters =
-          const SetupPaymentSheetParameters(
+          SetupPaymentSheetParameters(
         applePay: applePayConfig,
         googlePay: googlePayConfig,
         style: ThemeMode.light,

@@ -1,15 +1,17 @@
+import 'package:stripe_new/features/stripe_payment/data/data.dart';
+
+import '../models/models.dart';
+
 abstract class StripeRemoteDataSource {
   /// Creates a PaymentIntent for a one-time payment.
-  Future<String> createPaymentIntent({
+  Future<StripePaymentIntent> createPaymentIntent({
     required double amount,
-    required String currency,
-    String? customerId,
     bool isEnableAutomaticPaymentMethods = false,
     List<String> paymentMethodTypes = const [],
   });
 
   /// Creates a PaymentIntent for future payment
-  Future<String> createSetupIntent({
+  Future<StripeSetupIntent> createSetupIntent({
     String? customerId,
     bool isEnableAutomaticPaymentMethods = false,
     List<String> paymentMethodTypes = const [],

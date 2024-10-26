@@ -10,14 +10,12 @@ class StripeRepositoryImpl implements StripeRepository {
       : _stripeRemoteDataSource = stripeRemoteDataSource;
 
   @override
-  Future<Either<Failure, String>> createPaymentIntent({
+  Future<Either<Failure, StripePaymentIntent>> createPaymentIntent({
     required double amount,
-    required String currency,
   }) async {
     final response = await _stripeRemoteDataSource
         .createPaymentIntent(
           amount: amount,
-          currency: currency,
           isEnableAutomaticPaymentMethods: true,
         )
         .makeRequest();
@@ -25,7 +23,7 @@ class StripeRepositoryImpl implements StripeRepository {
   }
 
   @override
-  Future<Either<Failure, String>> createSetupIntent({
+  Future<Either<Failure, StripeSetupIntent>> createSetupIntent({
     List<String> paymentMethodTypes = const [],
   }) async {
     final response = await _stripeRemoteDataSource

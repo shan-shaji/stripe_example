@@ -1,27 +1,28 @@
 import 'package:dio/dio.dart' hide Headers;
 import 'package:retrofit/error_logger.dart';
 import 'package:retrofit/http.dart';
+import 'package:stripe_new/features/stripe_payment/data/models/models.dart';
 
 part 'stripe_client.g.dart';
 
-@RestApi(baseUrl: 'https://api.stripe.com')
+@RestApi(baseUrl: 'https://dev-api.buen.ro')
 abstract class StripeClient {
   factory StripeClient(Dio dio, {String? baseUrl}) = _StripeClient;
 
-  @POST('/v1/payment_intents')
+  @POST('/api/v1/stripe/create-payment-intent')
   @Headers({
     'Content-Type': 'application/x-www-form-urlencoded',
   })
-  Future<String> createPaymentIntent(
+  Future<StripePaymentIntent> createPaymentIntent(
     @Body() Map<String, dynamic> request,
     @Header('Authorization') String authorization,
   );
 
-  @POST('/v1/setup_intents')
+  @POST('/api/v1/stripe/create-setup-intent')
   @Headers({
     'Content-Type': 'application/x-www-form-urlencoded',
   })
-  Future<String> createSetupIntent(
+  Future<StripeSetupIntent> createSetupIntent(
     @Body() Map<String, dynamic> request,
     @Header('Authorization') String authorization,
   );

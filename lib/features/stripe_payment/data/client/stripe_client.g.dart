@@ -14,7 +14,7 @@ class _StripeClient implements StripeClient {
     this.baseUrl,
     this.errorLogger,
   }) {
-    baseUrl ??= 'https://api.stripe.com';
+    baseUrl ??= 'https://dev-api.buen.ro';
   }
 
   final Dio _dio;
@@ -24,7 +24,7 @@ class _StripeClient implements StripeClient {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<String> createPaymentIntent(
+  Future<StripePaymentIntent> createPaymentIntent(
     Map<String, dynamic> request,
     String authorization,
   ) async {
@@ -37,7 +37,7 @@ class _StripeClient implements StripeClient {
     _headers.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     _data.addAll(request);
-    final _options = _setStreamType<String>(Options(
+    final _options = _setStreamType<StripePaymentIntent>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
@@ -45,7 +45,7 @@ class _StripeClient implements StripeClient {
     )
         .compose(
           _dio.options,
-          '/v1/payment_intents',
+          '/api/v1/stripe/create-payment-intent',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -54,10 +54,10 @@ class _StripeClient implements StripeClient {
           _dio.options.baseUrl,
           baseUrl,
         )));
-    final _result = await _dio.fetch<String>(_options);
-    late String _value;
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late StripePaymentIntent _value;
     try {
-      _value = _result.data!;
+      _value = StripePaymentIntent.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;
@@ -66,7 +66,7 @@ class _StripeClient implements StripeClient {
   }
 
   @override
-  Future<String> createSetupIntent(
+  Future<StripeSetupIntent> createSetupIntent(
     Map<String, dynamic> request,
     String authorization,
   ) async {
@@ -79,7 +79,7 @@ class _StripeClient implements StripeClient {
     _headers.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     _data.addAll(request);
-    final _options = _setStreamType<String>(Options(
+    final _options = _setStreamType<StripeSetupIntent>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
@@ -87,7 +87,7 @@ class _StripeClient implements StripeClient {
     )
         .compose(
           _dio.options,
-          '/v1/setup_intents',
+          '/api/v1/stripe/create-setup-intent',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -96,10 +96,10 @@ class _StripeClient implements StripeClient {
           _dio.options.baseUrl,
           baseUrl,
         )));
-    final _result = await _dio.fetch<String>(_options);
-    late String _value;
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late StripeSetupIntent _value;
     try {
-      _value = _result.data!;
+      _value = StripeSetupIntent.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;
