@@ -9,7 +9,6 @@ Future<void> main() async {
 
   Stripe.publishableKey = dotenv.env['STRIPE_PUBLISHABLE_KEY'] ?? '';
   Stripe.merchantIdentifier = 'merchant.com.buenro.app';
-  Stripe.urlScheme = 'flutterstripe';
   await Stripe.instance.applySettings();
 
   runApp(const MyApp());
