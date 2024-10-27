@@ -23,11 +23,9 @@ class StripePaymentStatus with _$StripePaymentStatus {
     includeIfNull: false,
   )
   const factory StripePaymentStatus({
-    @JsonKey(
-        defaultValue: StripePaymentConfirmation.initial, name: 'paymentStatus')
+    @JsonKey(defaultValue: StripePaymentConfirmation.initial, name: 'paymentStatus ')
     required StripePaymentConfirmation stripePaymentConfirmation,
   }) = _StripePaymentStatus;
 
-  factory StripePaymentStatus.fromJson(Map<String, dynamic> json) =>
-      _$StripePaymentStatusFromJson(json);
+  factory StripePaymentStatus.fromJson(Map<String, dynamic> json) => _$StripePaymentStatusFromJson(json);
 }

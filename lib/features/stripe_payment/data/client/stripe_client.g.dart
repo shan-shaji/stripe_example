@@ -24,24 +24,24 @@ class _StripeClient implements StripeClient {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<StripePaymentIntent> createPaymentIntent(
+  Future<StripePaymentIntentResponse> createPaymentIntent(
     Map<String, dynamic> request,
     String authorization,
   ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{
-      r'Content-Type': 'application/x-www-form-urlencoded',
+      r'Content-Type': 'application/json',
       r'Authorization': authorization,
     };
     _headers.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     _data.addAll(request);
-    final _options = _setStreamType<StripePaymentIntent>(Options(
+    final _options = _setStreamType<StripePaymentIntentResponse>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
-      contentType: 'application/x-www-form-urlencoded',
+      contentType: 'application/json',
     )
         .compose(
           _dio.options,
@@ -55,9 +55,9 @@ class _StripeClient implements StripeClient {
           baseUrl,
         )));
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late StripePaymentIntent _value;
+    late StripePaymentIntentResponse _value;
     try {
-      _value = StripePaymentIntent.fromJson(_result.data!);
+      _value = StripePaymentIntentResponse.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;
@@ -66,24 +66,24 @@ class _StripeClient implements StripeClient {
   }
 
   @override
-  Future<StripeSetupIntent> createSetupIntent(
+  Future<StripeSetupIntentResponse> createSetupIntent(
     Map<String, dynamic> request,
     String authorization,
   ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{
-      r'Content-Type': 'application/x-www-form-urlencoded',
+      r'Content-Type': 'application/json',
       r'Authorization': authorization,
     };
     _headers.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     _data.addAll(request);
-    final _options = _setStreamType<StripeSetupIntent>(Options(
+    final _options = _setStreamType<StripeSetupIntentResponse>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
-      contentType: 'application/x-www-form-urlencoded',
+      contentType: 'application/json',
     )
         .compose(
           _dio.options,
@@ -97,9 +97,9 @@ class _StripeClient implements StripeClient {
           baseUrl,
         )));
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late StripeSetupIntent _value;
+    late StripeSetupIntentResponse _value;
     try {
-      _value = StripeSetupIntent.fromJson(_result.data!);
+      _value = StripeSetupIntentResponse.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;
@@ -113,24 +113,22 @@ class _StripeClient implements StripeClient {
     String paymentIntentId,
   ) async {
     final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{
-      r'paymentIntentId': paymentIntentId
-    };
+    final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{
-      r'Content-Type': 'application/x-www-form-urlencoded',
+      r'Content-Type': 'application/json',
       r'Authorization': authorization,
     };
     _headers.removeWhere((k, v) => v == null);
     const Map<String, dynamic>? _data = null;
     final _options = _setStreamType<StripePaymentStatus>(Options(
-      method: 'POST',
+      method: 'GET',
       headers: _headers,
       extra: _extra,
-      contentType: 'application/x-www-form-urlencoded',
+      contentType: 'application/json',
     )
         .compose(
           _dio.options,
-          '/api/v1/stripe/check-payment-status/{paymentIntentId}',
+          '/api/v1/stripe/check-payment-status/${paymentIntentId}',
           queryParameters: queryParameters,
           data: _data,
         )

@@ -10,14 +10,14 @@ _$StripePaymentStatusImpl _$$StripePaymentStatusImplFromJson(
         Map<String, dynamic> json) =>
     _$StripePaymentStatusImpl(
       stripePaymentConfirmation: $enumDecodeNullable(
-              _$StripePaymentConfirmationEnumMap, json['paymentStatus']) ??
+              _$StripePaymentConfirmationEnumMap, json['paymentStatus ']) ??
           StripePaymentConfirmation.initial,
     );
 
 Map<String, dynamic> _$$StripePaymentStatusImplToJson(
         _$StripePaymentStatusImpl instance) =>
     <String, dynamic>{
-      'paymentStatus': _$StripePaymentConfirmationEnumMap[
+      'paymentStatus ': _$StripePaymentConfirmationEnumMap[
           instance.stripePaymentConfirmation]!,
     };
 

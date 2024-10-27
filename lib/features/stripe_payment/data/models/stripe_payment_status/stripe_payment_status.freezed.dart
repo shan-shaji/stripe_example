@@ -21,7 +21,7 @@ StripePaymentStatus _$StripePaymentStatusFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$StripePaymentStatus {
   @JsonKey(
-      defaultValue: StripePaymentConfirmation.initial, name: 'paymentStatus')
+      defaultValue: StripePaymentConfirmation.initial, name: 'paymentStatus ')
   StripePaymentConfirmation get stripePaymentConfirmation =>
       throw _privateConstructorUsedError;
 
@@ -44,7 +44,7 @@ abstract class $StripePaymentStatusCopyWith<$Res> {
   $Res call(
       {@JsonKey(
           defaultValue: StripePaymentConfirmation.initial,
-          name: 'paymentStatus')
+          name: 'paymentStatus ')
       StripePaymentConfirmation stripePaymentConfirmation});
 }
 
@@ -85,7 +85,7 @@ abstract class _$$StripePaymentStatusImplCopyWith<$Res>
   $Res call(
       {@JsonKey(
           defaultValue: StripePaymentConfirmation.initial,
-          name: 'paymentStatus')
+          name: 'paymentStatus ')
       StripePaymentConfirmation stripePaymentConfirmation});
 }
 
@@ -120,7 +120,7 @@ class _$StripePaymentStatusImpl implements _StripePaymentStatus {
   const _$StripePaymentStatusImpl(
       {@JsonKey(
           defaultValue: StripePaymentConfirmation.initial,
-          name: 'paymentStatus')
+          name: 'paymentStatus ')
       required this.stripePaymentConfirmation});
 
   factory _$StripePaymentStatusImpl.fromJson(Map<String, dynamic> json) =>
@@ -128,7 +128,7 @@ class _$StripePaymentStatusImpl implements _StripePaymentStatus {
 
   @override
   @JsonKey(
-      defaultValue: StripePaymentConfirmation.initial, name: 'paymentStatus')
+      defaultValue: StripePaymentConfirmation.initial, name: 'paymentStatus ')
   final StripePaymentConfirmation stripePaymentConfirmation;
 
   @override
@@ -171,7 +171,7 @@ abstract class _StripePaymentStatus implements StripePaymentStatus {
   const factory _StripePaymentStatus(
           {@JsonKey(
               defaultValue: StripePaymentConfirmation.initial,
-              name: 'paymentStatus')
+              name: 'paymentStatus ')
           required final StripePaymentConfirmation stripePaymentConfirmation}) =
       _$StripePaymentStatusImpl;
 
@@ -180,7 +180,7 @@ abstract class _StripePaymentStatus implements StripePaymentStatus {
 
   @override
   @JsonKey(
-      defaultValue: StripePaymentConfirmation.initial, name: 'paymentStatus')
+      defaultValue: StripePaymentConfirmation.initial, name: 'paymentStatus ')
   StripePaymentConfirmation get stripePaymentConfirmation;
 
   /// Create a copy of StripePaymentStatus

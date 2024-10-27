@@ -26,18 +26,24 @@ mixin _$StripePaymentIntent {
   String get object => throw _privateConstructorUsedError;
   @JsonKey(defaultValue: 0)
   int get amount => throw _privateConstructorUsedError;
+  @JsonKey(defaultValue: 0)
+  int get amountCapturable => throw _privateConstructorUsedError;
+  @JsonKey(defaultValue: 0)
+  int get amountReceived => throw _privateConstructorUsedError;
+  @JsonKey(defaultValue: '')
+  String get captureMethod => throw _privateConstructorUsedError;
+  @JsonKey(name: 'client_secret', defaultValue: '')
+  String get clientSecret => throw _privateConstructorUsedError;
+  @JsonKey(defaultValue: '')
+  String get confirmationMethod => throw _privateConstructorUsedError;
+  @JsonKey(defaultValue: 0)
+  int get created => throw _privateConstructorUsedError;
   @JsonKey(defaultValue: '')
   String get currency => throw _privateConstructorUsedError;
   @JsonKey(defaultValue: '')
   String get customer => throw _privateConstructorUsedError;
   @JsonKey(defaultValue: '')
   String get status => throw _privateConstructorUsedError;
-  @JsonKey(name: 'client_secret', defaultValue: '')
-  String get clientSecret => throw _privateConstructorUsedError;
-  @JsonKey(defaultValue: {})
-  Map<String, dynamic> get metadata => throw _privateConstructorUsedError;
-  @JsonKey(defaultValue: 0)
-  int get created => throw _privateConstructorUsedError;
   @JsonKey(defaultValue: false)
   bool get livemode => throw _privateConstructorUsedError;
   @JsonKey(name: 'payment_method_types', defaultValue: [])
@@ -63,12 +69,15 @@ abstract class $StripePaymentIntentCopyWith<$Res> {
       {@JsonKey(defaultValue: '') String id,
       @JsonKey(defaultValue: '') String object,
       @JsonKey(defaultValue: 0) int amount,
+      @JsonKey(defaultValue: 0) int amountCapturable,
+      @JsonKey(defaultValue: 0) int amountReceived,
+      @JsonKey(defaultValue: '') String captureMethod,
+      @JsonKey(name: 'client_secret', defaultValue: '') String clientSecret,
+      @JsonKey(defaultValue: '') String confirmationMethod,
+      @JsonKey(defaultValue: 0) int created,
       @JsonKey(defaultValue: '') String currency,
       @JsonKey(defaultValue: '') String customer,
       @JsonKey(defaultValue: '') String status,
-      @JsonKey(name: 'client_secret', defaultValue: '') String clientSecret,
-      @JsonKey(defaultValue: {}) Map<String, dynamic> metadata,
-      @JsonKey(defaultValue: 0) int created,
       @JsonKey(defaultValue: false) bool livemode,
       @JsonKey(name: 'payment_method_types', defaultValue: [])
       List<String> paymentMethodTypes});
@@ -92,12 +101,15 @@ class _$StripePaymentIntentCopyWithImpl<$Res, $Val extends StripePaymentIntent>
     Object? id = null,
     Object? object = null,
     Object? amount = null,
+    Object? amountCapturable = null,
+    Object? amountReceived = null,
+    Object? captureMethod = null,
+    Object? clientSecret = null,
+    Object? confirmationMethod = null,
+    Object? created = null,
     Object? currency = null,
     Object? customer = null,
     Object? status = null,
-    Object? clientSecret = null,
-    Object? metadata = null,
-    Object? created = null,
     Object? livemode = null,
     Object? paymentMethodTypes = null,
   }) {
@@ -114,6 +126,30 @@ class _$StripePaymentIntentCopyWithImpl<$Res, $Val extends StripePaymentIntent>
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
               as int,
+      amountCapturable: null == amountCapturable
+          ? _value.amountCapturable
+          : amountCapturable // ignore: cast_nullable_to_non_nullable
+              as int,
+      amountReceived: null == amountReceived
+          ? _value.amountReceived
+          : amountReceived // ignore: cast_nullable_to_non_nullable
+              as int,
+      captureMethod: null == captureMethod
+          ? _value.captureMethod
+          : captureMethod // ignore: cast_nullable_to_non_nullable
+              as String,
+      clientSecret: null == clientSecret
+          ? _value.clientSecret
+          : clientSecret // ignore: cast_nullable_to_non_nullable
+              as String,
+      confirmationMethod: null == confirmationMethod
+          ? _value.confirmationMethod
+          : confirmationMethod // ignore: cast_nullable_to_non_nullable
+              as String,
+      created: null == created
+          ? _value.created
+          : created // ignore: cast_nullable_to_non_nullable
+              as int,
       currency: null == currency
           ? _value.currency
           : currency // ignore: cast_nullable_to_non_nullable
@@ -126,18 +162,6 @@ class _$StripePaymentIntentCopyWithImpl<$Res, $Val extends StripePaymentIntent>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as String,
-      clientSecret: null == clientSecret
-          ? _value.clientSecret
-          : clientSecret // ignore: cast_nullable_to_non_nullable
-              as String,
-      metadata: null == metadata
-          ? _value.metadata
-          : metadata // ignore: cast_nullable_to_non_nullable
-              as Map<String, dynamic>,
-      created: null == created
-          ? _value.created
-          : created // ignore: cast_nullable_to_non_nullable
-              as int,
       livemode: null == livemode
           ? _value.livemode
           : livemode // ignore: cast_nullable_to_non_nullable
@@ -162,12 +186,15 @@ abstract class _$$StripePaymentIntentImplCopyWith<$Res>
       {@JsonKey(defaultValue: '') String id,
       @JsonKey(defaultValue: '') String object,
       @JsonKey(defaultValue: 0) int amount,
+      @JsonKey(defaultValue: 0) int amountCapturable,
+      @JsonKey(defaultValue: 0) int amountReceived,
+      @JsonKey(defaultValue: '') String captureMethod,
+      @JsonKey(name: 'client_secret', defaultValue: '') String clientSecret,
+      @JsonKey(defaultValue: '') String confirmationMethod,
+      @JsonKey(defaultValue: 0) int created,
       @JsonKey(defaultValue: '') String currency,
       @JsonKey(defaultValue: '') String customer,
       @JsonKey(defaultValue: '') String status,
-      @JsonKey(name: 'client_secret', defaultValue: '') String clientSecret,
-      @JsonKey(defaultValue: {}) Map<String, dynamic> metadata,
-      @JsonKey(defaultValue: 0) int created,
       @JsonKey(defaultValue: false) bool livemode,
       @JsonKey(name: 'payment_method_types', defaultValue: [])
       List<String> paymentMethodTypes});
@@ -189,12 +216,15 @@ class __$$StripePaymentIntentImplCopyWithImpl<$Res>
     Object? id = null,
     Object? object = null,
     Object? amount = null,
+    Object? amountCapturable = null,
+    Object? amountReceived = null,
+    Object? captureMethod = null,
+    Object? clientSecret = null,
+    Object? confirmationMethod = null,
+    Object? created = null,
     Object? currency = null,
     Object? customer = null,
     Object? status = null,
-    Object? clientSecret = null,
-    Object? metadata = null,
-    Object? created = null,
     Object? livemode = null,
     Object? paymentMethodTypes = null,
   }) {
@@ -211,6 +241,30 @@ class __$$StripePaymentIntentImplCopyWithImpl<$Res>
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
               as int,
+      amountCapturable: null == amountCapturable
+          ? _value.amountCapturable
+          : amountCapturable // ignore: cast_nullable_to_non_nullable
+              as int,
+      amountReceived: null == amountReceived
+          ? _value.amountReceived
+          : amountReceived // ignore: cast_nullable_to_non_nullable
+              as int,
+      captureMethod: null == captureMethod
+          ? _value.captureMethod
+          : captureMethod // ignore: cast_nullable_to_non_nullable
+              as String,
+      clientSecret: null == clientSecret
+          ? _value.clientSecret
+          : clientSecret // ignore: cast_nullable_to_non_nullable
+              as String,
+      confirmationMethod: null == confirmationMethod
+          ? _value.confirmationMethod
+          : confirmationMethod // ignore: cast_nullable_to_non_nullable
+              as String,
+      created: null == created
+          ? _value.created
+          : created // ignore: cast_nullable_to_non_nullable
+              as int,
       currency: null == currency
           ? _value.currency
           : currency // ignore: cast_nullable_to_non_nullable
@@ -223,18 +277,6 @@ class __$$StripePaymentIntentImplCopyWithImpl<$Res>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as String,
-      clientSecret: null == clientSecret
-          ? _value.clientSecret
-          : clientSecret // ignore: cast_nullable_to_non_nullable
-              as String,
-      metadata: null == metadata
-          ? _value._metadata
-          : metadata // ignore: cast_nullable_to_non_nullable
-              as Map<String, dynamic>,
-      created: null == created
-          ? _value.created
-          : created // ignore: cast_nullable_to_non_nullable
-              as int,
       livemode: null == livemode
           ? _value.livemode
           : livemode // ignore: cast_nullable_to_non_nullable
@@ -256,18 +298,20 @@ class _$StripePaymentIntentImpl implements _StripePaymentIntent {
       {@JsonKey(defaultValue: '') required this.id,
       @JsonKey(defaultValue: '') required this.object,
       @JsonKey(defaultValue: 0) required this.amount,
+      @JsonKey(defaultValue: 0) required this.amountCapturable,
+      @JsonKey(defaultValue: 0) required this.amountReceived,
+      @JsonKey(defaultValue: '') required this.captureMethod,
+      @JsonKey(name: 'client_secret', defaultValue: '')
+      required this.clientSecret,
+      @JsonKey(defaultValue: '') required this.confirmationMethod,
+      @JsonKey(defaultValue: 0) required this.created,
       @JsonKey(defaultValue: '') required this.currency,
       @JsonKey(defaultValue: '') required this.customer,
       @JsonKey(defaultValue: '') required this.status,
-      @JsonKey(name: 'client_secret', defaultValue: '')
-      required this.clientSecret,
-      @JsonKey(defaultValue: {}) required final Map<String, dynamic> metadata,
-      @JsonKey(defaultValue: 0) required this.created,
       @JsonKey(defaultValue: false) required this.livemode,
       @JsonKey(name: 'payment_method_types', defaultValue: [])
       required final List<String> paymentMethodTypes})
-      : _metadata = metadata,
-        _paymentMethodTypes = paymentMethodTypes;
+      : _paymentMethodTypes = paymentMethodTypes;
 
   factory _$StripePaymentIntentImpl.fromJson(Map<String, dynamic> json) =>
       _$$StripePaymentIntentImplFromJson(json);
@@ -282,6 +326,24 @@ class _$StripePaymentIntentImpl implements _StripePaymentIntent {
   @JsonKey(defaultValue: 0)
   final int amount;
   @override
+  @JsonKey(defaultValue: 0)
+  final int amountCapturable;
+  @override
+  @JsonKey(defaultValue: 0)
+  final int amountReceived;
+  @override
+  @JsonKey(defaultValue: '')
+  final String captureMethod;
+  @override
+  @JsonKey(name: 'client_secret', defaultValue: '')
+  final String clientSecret;
+  @override
+  @JsonKey(defaultValue: '')
+  final String confirmationMethod;
+  @override
+  @JsonKey(defaultValue: 0)
+  final int created;
+  @override
   @JsonKey(defaultValue: '')
   final String currency;
   @override
@@ -290,21 +352,6 @@ class _$StripePaymentIntentImpl implements _StripePaymentIntent {
   @override
   @JsonKey(defaultValue: '')
   final String status;
-  @override
-  @JsonKey(name: 'client_secret', defaultValue: '')
-  final String clientSecret;
-  final Map<String, dynamic> _metadata;
-  @override
-  @JsonKey(defaultValue: {})
-  Map<String, dynamic> get metadata {
-    if (_metadata is EqualUnmodifiableMapView) return _metadata;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(_metadata);
-  }
-
-  @override
-  @JsonKey(defaultValue: 0)
-  final int created;
   @override
   @JsonKey(defaultValue: false)
   final bool livemode;
@@ -320,7 +367,7 @@ class _$StripePaymentIntentImpl implements _StripePaymentIntent {
 
   @override
   String toString() {
-    return 'StripePaymentIntent(id: $id, object: $object, amount: $amount, currency: $currency, customer: $customer, status: $status, clientSecret: $clientSecret, metadata: $metadata, created: $created, livemode: $livemode, paymentMethodTypes: $paymentMethodTypes)';
+    return 'StripePaymentIntent(id: $id, object: $object, amount: $amount, amountCapturable: $amountCapturable, amountReceived: $amountReceived, captureMethod: $captureMethod, clientSecret: $clientSecret, confirmationMethod: $confirmationMethod, created: $created, currency: $currency, customer: $customer, status: $status, livemode: $livemode, paymentMethodTypes: $paymentMethodTypes)';
   }
 
   @override
@@ -331,15 +378,22 @@ class _$StripePaymentIntentImpl implements _StripePaymentIntent {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.object, object) || other.object == object) &&
             (identical(other.amount, amount) || other.amount == amount) &&
+            (identical(other.amountCapturable, amountCapturable) ||
+                other.amountCapturable == amountCapturable) &&
+            (identical(other.amountReceived, amountReceived) ||
+                other.amountReceived == amountReceived) &&
+            (identical(other.captureMethod, captureMethod) ||
+                other.captureMethod == captureMethod) &&
+            (identical(other.clientSecret, clientSecret) ||
+                other.clientSecret == clientSecret) &&
+            (identical(other.confirmationMethod, confirmationMethod) ||
+                other.confirmationMethod == confirmationMethod) &&
+            (identical(other.created, created) || other.created == created) &&
             (identical(other.currency, currency) ||
                 other.currency == currency) &&
             (identical(other.customer, customer) ||
                 other.customer == customer) &&
             (identical(other.status, status) || other.status == status) &&
-            (identical(other.clientSecret, clientSecret) ||
-                other.clientSecret == clientSecret) &&
-            const DeepCollectionEquality().equals(other._metadata, _metadata) &&
-            (identical(other.created, created) || other.created == created) &&
             (identical(other.livemode, livemode) ||
                 other.livemode == livemode) &&
             const DeepCollectionEquality()
@@ -353,12 +407,15 @@ class _$StripePaymentIntentImpl implements _StripePaymentIntent {
       id,
       object,
       amount,
+      amountCapturable,
+      amountReceived,
+      captureMethod,
+      clientSecret,
+      confirmationMethod,
+      created,
       currency,
       customer,
       status,
-      clientSecret,
-      const DeepCollectionEquality().hash(_metadata),
-      created,
       livemode,
       const DeepCollectionEquality().hash(_paymentMethodTypes));
 
@@ -381,20 +438,23 @@ class _$StripePaymentIntentImpl implements _StripePaymentIntent {
 
 abstract class _StripePaymentIntent implements StripePaymentIntent {
   const factory _StripePaymentIntent(
-      {@JsonKey(defaultValue: '') required final String id,
-      @JsonKey(defaultValue: '') required final String object,
-      @JsonKey(defaultValue: 0) required final int amount,
-      @JsonKey(defaultValue: '') required final String currency,
-      @JsonKey(defaultValue: '') required final String customer,
-      @JsonKey(defaultValue: '') required final String status,
-      @JsonKey(name: 'client_secret', defaultValue: '')
-      required final String clientSecret,
-      @JsonKey(defaultValue: {}) required final Map<String, dynamic> metadata,
-      @JsonKey(defaultValue: 0) required final int created,
-      @JsonKey(defaultValue: false) required final bool livemode,
-      @JsonKey(name: 'payment_method_types', defaultValue: [])
-      required final List<String>
-          paymentMethodTypes}) = _$StripePaymentIntentImpl;
+          {@JsonKey(defaultValue: '') required final String id,
+          @JsonKey(defaultValue: '') required final String object,
+          @JsonKey(defaultValue: 0) required final int amount,
+          @JsonKey(defaultValue: 0) required final int amountCapturable,
+          @JsonKey(defaultValue: 0) required final int amountReceived,
+          @JsonKey(defaultValue: '') required final String captureMethod,
+          @JsonKey(name: 'client_secret', defaultValue: '')
+          required final String clientSecret,
+          @JsonKey(defaultValue: '') required final String confirmationMethod,
+          @JsonKey(defaultValue: 0) required final int created,
+          @JsonKey(defaultValue: '') required final String currency,
+          @JsonKey(defaultValue: '') required final String customer,
+          @JsonKey(defaultValue: '') required final String status,
+          @JsonKey(defaultValue: false) required final bool livemode,
+          @JsonKey(name: 'payment_method_types', defaultValue: [])
+          required final List<String> paymentMethodTypes}) =
+      _$StripePaymentIntentImpl;
 
   factory _StripePaymentIntent.fromJson(Map<String, dynamic> json) =
       _$StripePaymentIntentImpl.fromJson;
@@ -409,6 +469,24 @@ abstract class _StripePaymentIntent implements StripePaymentIntent {
   @JsonKey(defaultValue: 0)
   int get amount;
   @override
+  @JsonKey(defaultValue: 0)
+  int get amountCapturable;
+  @override
+  @JsonKey(defaultValue: 0)
+  int get amountReceived;
+  @override
+  @JsonKey(defaultValue: '')
+  String get captureMethod;
+  @override
+  @JsonKey(name: 'client_secret', defaultValue: '')
+  String get clientSecret;
+  @override
+  @JsonKey(defaultValue: '')
+  String get confirmationMethod;
+  @override
+  @JsonKey(defaultValue: 0)
+  int get created;
+  @override
   @JsonKey(defaultValue: '')
   String get currency;
   @override
@@ -417,15 +495,6 @@ abstract class _StripePaymentIntent implements StripePaymentIntent {
   @override
   @JsonKey(defaultValue: '')
   String get status;
-  @override
-  @JsonKey(name: 'client_secret', defaultValue: '')
-  String get clientSecret;
-  @override
-  @JsonKey(defaultValue: {})
-  Map<String, dynamic> get metadata;
-  @override
-  @JsonKey(defaultValue: 0)
-  int get created;
   @override
   @JsonKey(defaultValue: false)
   bool get livemode;

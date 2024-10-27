@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:stripe_new/features/stripe_payment/domain/use_cases/check_payment_status_use_case.dart';
 import 'package:stripe_new/features/stripe_payment/stripe_payment.dart';
 import 'package:stripe_new/features/stripe_payment/utils/stripe_error_utils.dart';
 
@@ -40,6 +39,12 @@ class StripePaymentBloc extends Bloc<StripePaymentEvent, StripePaymentState> {
     response.fold((error) {
       emit(StripePaymentState.paymentFailed(error: error.message));
     }, (stripeSetupIntent) {
+      if (stripeSetupIntent.clientSecret.isEmpty) {
+        emit(const StripePaymentState.paymentFailed(
+            error: StripeErrorUtils.errorMessage));
+        return;
+      }
+
       add(
         HandlePaymentSheet(
           clientSecret: stripeSetupIntent.clientSecret,
@@ -62,6 +67,12 @@ class StripePaymentBloc extends Bloc<StripePaymentEvent, StripePaymentState> {
     response.fold((error) {
       emit(StripePaymentState.paymentFailed(error: error.message));
     }, (stripePaymentIntent) {
+      if (stripePaymentIntent.clientSecret.isEmpty) {
+        emit(const StripePaymentState.paymentFailed(
+            error: StripeErrorUtils.errorMessage));
+        return;
+      }
+
       add(
         HandlePaymentSheet(
           clientSecret: stripePaymentIntent.clientSecret,
@@ -128,10 +139,13 @@ class StripePaymentBloc extends Bloc<StripePaymentEvent, StripePaymentState> {
       }
 
       emit(const StripePaymentState.paymentSuccess());
-    } on StripeConfigException catch (_) {
+    } on StripeConfigException catch (e) {
+      print('e: $e');
       emit(const StripePaymentState.paymentFailed(
           error: StripeErrorUtils.errorMessage));
     } on StripeException catch (e) {
+      print('e: $e');
+
       emit(StripePaymentState.paymentFailed(
           error: StripeErrorUtils.mapStripeFailureCodeToMessage(e.error.code)));
     } catch (_) {
