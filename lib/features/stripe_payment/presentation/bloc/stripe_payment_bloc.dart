@@ -1,8 +1,11 @@
+import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:stripe_new/features/stripe_payment/domain/use_cases/check_payment_status_use_case.dart';
 import 'package:stripe_new/features/stripe_payment/stripe_payment.dart';
+import 'package:stripe_new/features/stripe_payment/utils/stripe_error_utils.dart';
 
 part 'stripe_payment_bloc.freezed.dart';
 
@@ -13,20 +16,22 @@ part 'stripe_payment_state.dart';
 class StripePaymentBloc extends Bloc<StripePaymentEvent, StripePaymentState> {
   final CreatePaymentIntentUseCase _createPaymentIntentUseCase;
   final CreateSetupIntentUseCase _createSetupIntentUseCase;
-  final _errorMessage = 'We\'re having trouble processing your payment.';
+  final CheckPaymentStatusUseCase _checkPaymentStatusUseCase;
 
   StripePaymentBloc({
     required CreatePaymentIntentUseCase createPaymentIntentUseCase,
     required CreateSetupIntentUseCase createSetupIntentUseCase,
+    required CheckPaymentStatusUseCase checkPaymentIntentUseCase,
   })  : _createPaymentIntentUseCase = createPaymentIntentUseCase,
         _createSetupIntentUseCase = createSetupIntentUseCase,
+        _checkPaymentStatusUseCase = checkPaymentIntentUseCase,
         super(const StripePaymentState.initial()) {
-    on<PayNow>(_onStripePayNow);
+    on<PayNow>(_onStripePayNow, transformer: droppable());
     on<HandlePaymentSheet>(_onHandlePaymentSheet);
-    on<PayLater>(_onPayLater);
+    on<PayLater>(_onStripePayLater, transformer: droppable());
   }
 
-  Future<void> _onPayLater(
+  Future<void> _onStripePayLater(
     PayLater event,
     Emitter<StripePaymentState> emit,
   ) async {
@@ -68,13 +73,12 @@ class StripePaymentBloc extends Bloc<StripePaymentEvent, StripePaymentState> {
     });
   }
 
-  String _mapFailureCodeToMessage(FailureCode code) {
-    return switch (code) {
-      FailureCode.Canceled => 'The payment flow has been canceled',
-      FailureCode.Failed => _errorMessage,
-      FailureCode.Timeout => _errorMessage,
-      FailureCode.Unknown => _errorMessage,
-    };
+  Future<(String, StripePaymentStatus?)> _checkPaymentConfirmation({
+    required String paymentIntentId,
+  }) async {
+    final response =
+        await _checkPaymentStatusUseCase(paymentIntentId: paymentIntentId);
+    return response;
   }
 
   Future<void> _onHandlePaymentSheet(
@@ -108,14 +112,31 @@ class StripePaymentBloc extends Bloc<StripePaymentEvent, StripePaymentState> {
       await Stripe.instance
           .initPaymentSheet(paymentSheetParameters: setupIntentSheetParameters);
       await Stripe.instance.presentPaymentSheet();
+
+      if (event.paymentType == PaymentType.payLater) {
+        emit(const StripePaymentState.paymentSuccess());
+        return;
+      }
+
+      final (error, stripePaymentStatus) = await _checkPaymentConfirmation(
+        paymentIntentId: event.stripeIntentId,
+      );
+
+      if (error.isNotEmpty) {
+        emit(StripePaymentState.paymentFailed(error: error));
+        return;
+      }
+
       emit(const StripePaymentState.paymentSuccess());
     } on StripeConfigException catch (_) {
-      emit(StripePaymentState.paymentFailed(error: _errorMessage));
+      emit(const StripePaymentState.paymentFailed(
+          error: StripeErrorUtils.errorMessage));
     } on StripeException catch (e) {
       emit(StripePaymentState.paymentFailed(
-          error: _mapFailureCodeToMessage(e.error.code)));
+          error: StripeErrorUtils.mapStripeFailureCodeToMessage(e.error.code)));
     } catch (_) {
-      emit(StripePaymentState.paymentFailed(error: _errorMessage));
+      emit(const StripePaymentState.paymentFailed(
+          error: StripeErrorUtils.errorMessage));
     }
   }
 }

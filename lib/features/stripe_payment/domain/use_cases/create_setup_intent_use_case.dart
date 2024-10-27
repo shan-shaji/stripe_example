@@ -1,3 +1,4 @@
+import 'package:stripe_new/core/extensions/repository_extension.dart';
 import 'package:stripe_new/features/stripe_payment/stripe_payment.dart';
 import 'package:stripe_new/core/utils/either.dart';
 import 'package:stripe_new/core/utils/failure.dart';
@@ -10,8 +11,9 @@ class CreateSetupIntentUseCase {
   Future<Either<Failure, StripeSetupIntent>> call({
     List<String> paymentMethodTypes = const [],
   }) async {
-    return _stripeRepository.createSetupIntent(
-      paymentMethodTypes: paymentMethodTypes,
-    );
+    final response = await _stripeRepository
+        .createSetupIntent(paymentMethodTypes: paymentMethodTypes)
+        .makeRequest();
+    return response;
   }
 }

@@ -103,7 +103,8 @@ extension RepositoryExtension<T> on Future<T> {
   /// project for proper error handling.
   ///
   ///
-  Future<Either<Failure, T>> makeRequest({ValueChanged<T>? onSuccess, VoidCallback? onFailure}) async {
+  Future<Either<Failure, T>> makeRequest(
+      {ValueChanged<T>? onSuccess, VoidCallback? onFailure}) async {
     try {
       final data = await this;
       onSuccess?.call(data);
@@ -117,6 +118,7 @@ extension RepositoryExtension<T> on Future<T> {
       return Left(
         ServerFailure(
           message: e.message,
+          statusCode: e.response?.statusCode,
         ),
       );
     } catch (e, s) {

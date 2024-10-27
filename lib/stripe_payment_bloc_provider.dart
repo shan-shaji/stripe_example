@@ -26,6 +26,7 @@ class StripePaymentBlocProvider extends StatelessWidget {
           stripeRepository,
         ),
         createSetupIntentUseCase: CreateSetupIntentUseCase(stripeRepository),
+        checkPaymentIntentUseCase: CheckPaymentStatusUseCase(stripeRepository),
       ),
       child: child,
     );

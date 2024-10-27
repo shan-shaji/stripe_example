@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:stripe_new/features/stripe_payment/presentation/widgets/stripe_button.dart';
 import 'package:stripe_new/features/stripe_payment/stripe_payment.dart';
 
 class StripePayLaterButton extends StatelessWidget {
@@ -29,37 +30,6 @@ class StripePayLaterButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget button() {
-      return GestureDetector(
-        onTap: onTap ??
-            () => context
-                .read<StripePaymentBloc>() //
-                .add(const PayLater()),
-        child: Container(
-          width: double.infinity,
-          padding: const EdgeInsets.symmetric(
-            horizontal: 22,
-            vertical: 12,
-          ),
-          decoration: decoration ??
-              BoxDecoration(
-                color: Colors.black,
-                borderRadius: BorderRadius.circular(2),
-              ),
-          child: Center(
-            child: Text(
-              title,
-              style: titleStyle ??
-                  const TextStyle(
-                    color: Colors.white,
-                    fontSize: 22,
-                  ),
-            ),
-          ),
-        ),
-      );
-    }
-
     return StripePaymentBlocListener(
       onSuccess: onSuccess,
       onFailure: onFailure,
@@ -67,10 +37,25 @@ class StripePayLaterButton extends StatelessWidget {
       isEnableListener: isEnableListener,
       child: BlocBuilder<StripePaymentBloc, StripePaymentState>(
         builder: (context, state) {
-          if (isEnableListener) return button();
+          final button = StripeButton(
+            onTap: () {
+              if (onTap == null) {
+                context
+                    .read<StripePaymentBloc>() //
+                    .add(const PayLater());
+                return;
+              }
+              onTap!();
+            },
+            title: title,
+            titleStyle: titleStyle,
+            decoration: decoration,
+          );
+
+          if (isEnableListener) return button;
           return state.maybeMap(
             loading: (_) => const CircularProgressIndicator(),
-            orElse: () => button(),
+            orElse: () => button,
           );
         },
       ),

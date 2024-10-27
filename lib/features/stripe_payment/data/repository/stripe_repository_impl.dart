@@ -1,7 +1,4 @@
 import 'package:stripe_new/features/stripe_payment/stripe_payment.dart';
-import 'package:stripe_new/core/extensions/repository_extension.dart';
-import 'package:stripe_new/core/utils/either.dart';
-import 'package:stripe_new/core/utils/failure.dart';
 
 class StripeRepositoryImpl implements StripeRepository {
   final StripeRemoteDataSource _stripeRemoteDataSource;
@@ -10,25 +7,28 @@ class StripeRepositoryImpl implements StripeRepository {
       : _stripeRemoteDataSource = stripeRemoteDataSource;
 
   @override
-  Future<Either<Failure, StripePaymentIntent>> createPaymentIntent({
+  Future<StripePaymentIntent> createPaymentIntent({
     required double amount,
   }) async {
-    final response = await _stripeRemoteDataSource
-        .createPaymentIntent(
-          amount: amount,
-          isEnableAutomaticPaymentMethods: true,
-        )
-        .makeRequest();
-    return response;
+    return _stripeRemoteDataSource.createPaymentIntent(
+      amount: amount,
+      isEnableAutomaticPaymentMethods: true,
+    );
   }
 
   @override
-  Future<Either<Failure, StripeSetupIntent>> createSetupIntent({
+  Future<StripeSetupIntent> createSetupIntent({
     List<String> paymentMethodTypes = const [],
   }) async {
-    final response = await _stripeRemoteDataSource
-        .createSetupIntent(paymentMethodTypes: paymentMethodTypes)
-        .makeRequest();
-    return response;
+    return _stripeRemoteDataSource.createSetupIntent(
+        paymentMethodTypes: paymentMethodTypes);
+  }
+
+  @override
+  Future<StripePaymentStatus> checkPaymentStatus({
+    required String paymentIntentId,
+  }) async {
+    return _stripeRemoteDataSource.checkPaymentStatus(
+        paymentIntentId: paymentIntentId);
   }
 }

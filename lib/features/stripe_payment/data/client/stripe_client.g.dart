@@ -107,6 +107,49 @@ class _StripeClient implements StripeClient {
     return _value;
   }
 
+  @override
+  Future<StripePaymentStatus> checkPaymentStatus(
+    String authorization,
+    String paymentIntentId,
+  ) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'paymentIntentId': paymentIntentId
+    };
+    final _headers = <String, dynamic>{
+      r'Content-Type': 'application/x-www-form-urlencoded',
+      r'Authorization': authorization,
+    };
+    _headers.removeWhere((k, v) => v == null);
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<StripePaymentStatus>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+      contentType: 'application/x-www-form-urlencoded',
+    )
+        .compose(
+          _dio.options,
+          '/api/v1/stripe/check-payment-status/{paymentIntentId}',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late StripePaymentStatus _value;
+    try {
+      _value = StripePaymentStatus.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
     if (T != dynamic &&
         !(requestOptions.responseType == ResponseType.bytes ||
