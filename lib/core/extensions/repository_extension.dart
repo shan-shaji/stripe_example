@@ -15,7 +15,7 @@ extension RepositoryExtension<T> on Future<T> {
       final data = await this;
       onSuccess?.call(data);
       return Right(data);
-    } on DioException catch (e, s) {
+    } on DioException catch (e) {
       return Left(
         ServerFailure(
           message: e.message,
