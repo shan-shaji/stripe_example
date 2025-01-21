@@ -91,7 +91,7 @@ class StripePaymentBloc extends Bloc<StripePaymentEvent, StripePaymentState> {
         applePay: applePayConfig,
         googlePay: googlePayConfig,
         style: ThemeMode.light,
-        merchantDisplayName: 'Beunro',
+        merchantDisplayName: 'Stripe Payment Example',
       );
 
       setupIntentSheetParameters = event.paymentType == PaymentType.payLater
