@@ -1,4 +1,4 @@
-import 'package:stripe_new/core/utils/either.dart';
+import 'package:dartz/dartz.dart';
 import 'package:stripe_new/core/utils/failure.dart';
 
 abstract class StripeRepository {

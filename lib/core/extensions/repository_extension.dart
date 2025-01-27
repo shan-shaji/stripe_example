@@ -1,10 +1,7 @@
-// ignore_for_file: lines_longer_than_80_chars, comment_references
-
+import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-
-import '../utils/either.dart';
-import '../utils/failure.dart';
+import 'package:stripe_new/core/utils/failure.dart';
 
 extension RepositoryExtension<T> on Future<T> {
   Future<Either<Failure, T>> makeRequest({

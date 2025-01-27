@@ -61,7 +61,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   Stripe: cdf416cf2efe286f532a6306de0fcaa0ecc8c71a
-  stripe_ios: 91946e5c07e0a0dc0e1484ee6659e1f90a302cf3
+  stripe_ios: 3c4c044a789cecb94d038cc49e7f8b621c742a17
   StripeApplePay: efb62ffc08e6cd4f161d77ddb45de2451075c54e
   StripeCore: 9731f05e327c3dcaf7d7abd116840ceaa9482bbe
   StripeFinancialConnections: 46c0049aaab3a179193502bce4a8096eb7b73f55
@@ -72,4 +72,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 819463e6a0290f5a72f145ba7cde16e8b6ef0796
 
-COCOAPODS: 1.15.0
+COCOAPODS: 1.16.2

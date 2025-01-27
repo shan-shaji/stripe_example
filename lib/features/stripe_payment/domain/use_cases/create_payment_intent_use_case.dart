@@ -1,5 +1,5 @@
+import 'package:dartz/dartz.dart';
 import 'package:stripe_new/features/stripe_payment/stripe_payment.dart';
-import 'package:stripe_new/core/utils/either.dart';
 import 'package:stripe_new/core/utils/failure.dart';
 
 class CreatePaymentIntentUseCase {
